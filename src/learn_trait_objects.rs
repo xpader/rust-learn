@@ -1,8 +1,5 @@
-// mod structs;
-
 use std::ops::Add;
 use super::structs::Point;
-
 
 trait Draw {
     fn draw(&self) -> String;

@@ -4,12 +4,20 @@ mod structs;
 mod learn_trait_objects;
 mod learn_debug_display;
 mod learn_hashmap;
+mod learn_enum;
 
-use std::{fmt::Display};
+mod rs2015;
+mod rs2018;
+
+// 通过 [path=..] 指定任意路径文件为模块
+#[path ="any/engine.rs"]
+mod ss;
+
 use crate::structs::Point;
 use crate::learn_hashmap::learn_hashmap;
 use crate::learn_trait_objects::learn_trait_object;
 use learn_debug_display::learn_debug_display;
+use learn_enum::learn_enum;
 
 #[allow(dead_code)]
 fn read() -> ! {
@@ -53,40 +61,6 @@ fn learn_array() {
     let str = "Rust is good";
     let str_arr: [String; 5] = core::array::from_fn(|_| String::from(str));
     println!("{:?}", str_arr);
-}
-
-enum IpAddr {
-    V4(String),
-    V6(String)
-}
-
-impl Display for IpAddr {
-    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-        match self {
-            IpAddr::V4(ip) => write!(f, "v4 -> {}", ip),
-            IpAddr::V6(ip) => write!(f, "v6 -> {}", ip)
-        }
-    }
-}
-
-fn learn_enum() {
-    let ipv4 = IpAddr::V4("192.168.1.1".to_string());
-    let ipv6 = IpAddr::V6("::1".to_string());
-
-    if let IpAddr::V4(v) = &ipv4 {
-        println!("This is a ipv4: {}", v);
-    }
-
-    match &ipv6 {
-        IpAddr::V6(v) => println!("This is a ipv6: {}", v),
-        _ => ()
-    }
-
-    let ip_list = vec![ipv4, ipv6];
-
-    for ip in &ip_list {
-        println!("{}", ip);
-    }
 }
 
 fn learn_vec() {
@@ -246,4 +220,7 @@ fn main() {
     learn_trait_object();
     learn_hashmap();
     learn_type_as();
+    rs2015::engine::engine_start();
+    rs2018::engine::engine_start();
+    ss::engine_start();
 }
